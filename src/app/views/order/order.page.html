@@ -25,19 +25,47 @@
     ></ion-input>
   </ion-item>
 
-  <div style="display: flex; gap: 10px">
+  <div style="display: flex; gap: 10px; margin-bottom: 20px">
     <ion-button
       expand="block"
       style="flex: 1"
       color="light"
       (click)="sendOrder()"
+      [disabled]="showDetails"
     >
       Order
     </ion-button>
 
-    <ion-button expand="block" style="flex: 1" (click)="checkAllItems()">
-      Check all items
+    <ion-button expand="block" style="flex: 1" (click)="toggleDetails()">
+      {{ showDetails ? 'Collapse other items' : 'Check all items' }}
     </ion-button>
   </div>
-  }
+
+  @if (showDetails) {
+  <ion-list>
+    @for (stockItem of allItems; track stockItem.id) {
+    <ion-item>
+      <ion-checkbox
+        slot="start"
+        [checked]="stockItem.quantity > 0"
+        [disabled]="stockItem.id === item.id"
+        (ionChange)="onSelectChange(stockItem, $event)"
+      >
+      </ion-checkbox>
+
+      <ion-label>
+        <h2>{{ stockItem.name }}</h2>
+      </ion-label>
+
+      <ion-note slot="end" color="dark">
+        {{ stockItem.stock }} {{ stockItem.unit }}
+      </ion-note>
+    </ion-item>
+    }
+  </ion-list>
+
+  <ion-button expand="block" class="ion-margin-top" (click)="sendOrder()">
+    Order
+  </ion-button>
+  } }
 </ion-content>
