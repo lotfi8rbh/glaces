@@ -39,13 +39,11 @@ import { IceCreamItem } from '../../data/ice-cream-item';
     IonLabel,
     IonInput,
     IonButton,
-    IonFooter,
     IonList,
     IonCheckbox,
     IonNote,
     CommonModule,
     FormsModule,
-    RouterLink,
   ],
 })
 export class OrderPage implements OnInit {
