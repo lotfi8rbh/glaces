@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router'; // IMPORTANT : Pour la navigation
 import {
   IonContent,
   IonHeader,
@@ -21,6 +22,9 @@ import {
   IonItem,
   IonNote,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { alertCircle } from 'ionicons/icons';
+
 import { StockRepository } from '../../repository/stock-repository';
 import { IceCreamItem } from '../../data/ice-cream-item';
 
@@ -47,24 +51,27 @@ import { IceCreamItem } from '../../data/ice-cream-item';
     IonFooter,
     IonList,
     IonItem,
+    IonNote,
     CommonModule,
     FormsModule,
-    IonNote,
+    RouterLink,
   ],
 })
 export class IceCreamPage implements OnInit {
   items: IceCreamItem[] = [];
-  selectedContainerId: string = 'cup'; // Par défaut
+  selectedContainerId: string = 'cup';
 
-  constructor(private stockRepo: StockRepository) {}
+  constructor(private stockRepo: StockRepository) {
+    // Enregistrement de l'icône pour qu'elle s'affiche
+    addIcons({ alertCircle });
+  }
 
   ngOnInit() {
     this.items = this.stockRepo.items;
-    // Initialiser le contenant par défaut dans le stock
     this.updateContainerStock('cup');
   }
 
-  // --- Getters pour filtrer les items ---
+  // --- Getters ---
   get flavors(): IceCreamItem[] {
     return this.items.filter((i) =>
       ['chocolate', 'vanilla', 'pistachio'].includes(i.id)
@@ -81,7 +88,7 @@ export class IceCreamPage implements OnInit {
     );
   }
 
-  // --- Logique Boules de Glace ---
+  // --- Logique Boules ---
   get totalScoops(): number {
     return this.flavors.reduce((acc, item) => acc + item.quantity, 0);
   }
@@ -98,7 +105,7 @@ export class IceCreamPage implements OnInit {
     }
   }
 
-  // --- Logique Contenant (Radio) ---
+  // --- Logique Contenant ---
   onContainerChange(event: any) {
     this.selectedContainerId = event.detail.value;
     this.updateContainerStock(this.selectedContainerId);
@@ -108,16 +115,15 @@ export class IceCreamPage implements OnInit {
     this.containers.forEach((c) => (c.quantity = c.id === selectedId ? 1 : 0));
   }
 
-  // --- Logique Extras (Checkbox) ---
+  // --- Logique Extras ---
   onExtraChange(item: IceCreamItem, event: any) {
     item.quantity = event.detail.checked ? 1 : 0;
   }
 
-  // --- Calcul du Prix Total ---
+  // --- Prix Total ---
   get totalPrice(): number {
     let price = 0;
 
-    // Prix des boules (règles spécifiques)
     const scoops = this.totalScoops;
     if (scoops === 1) price += 1.5;
     else if (scoops === 2) price += 3.0;
@@ -125,11 +131,9 @@ export class IceCreamPage implements OnInit {
     else if (scoops === 4) price += 5.0;
     else if (scoops === 5) price += 5.5;
 
-    // Prix du contenant (Cone = 1€, Cup = 0€)
     const cone = this.items.find((i) => i.id === 'cone');
     if (cone && cone.quantity > 0) price += cone.price;
 
-    // Prix des extras
     this.extras.forEach((e) => {
       if (e.quantity > 0) price += e.price;
     });

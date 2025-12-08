@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/ice-cream"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ item?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  @if (item) {
+  <div style="display: flex; align-items: center; margin-bottom: 20px">
+    <ion-img
+      [src]="item.image"
+      style="width: 100px; height: 100px; margin-right: 20px"
+    ></ion-img>
+    <h2>{{ item.name }} flavour<br />is empty</h2>
+  </div>
+
+  <ion-item class="ion-margin-bottom">
+    <ion-input
+      label="Signature"
+      labelPlacement="stacked"
+      [(ngModel)]="signature"
+    ></ion-input>
+  </ion-item>
+
+  <div style="display: flex; gap: 10px">
+    <ion-button
+      expand="block"
+      style="flex: 1"
+      color="light"
+      (click)="sendOrder()"
+    >
+      Order
+    </ion-button>
+
+    <ion-button expand="block" style="flex: 1" (click)="checkAllItems()">
+      Check all items
+    </ion-button>
+  </div>
+  }
+</ion-content>

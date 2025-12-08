@@ -29,9 +29,11 @@
             style="width: 50px; height: 50px"
           ></ion-img>
         </ion-col>
+
         <ion-col>
           <ion-label>{{ flavor.name }}</ion-label>
         </ion-col>
+
         <ion-col size="auto">
           <ion-button
             (click)="onSub(flavor)"
@@ -41,6 +43,7 @@
             >-</ion-button
           >
         </ion-col>
+
         <ion-col size="auto">
           <ion-button
             (click)="onAdd(flavor)"
@@ -50,11 +53,21 @@
             >+</ion-button
           >
         </ion-col>
+
         <ion-col size="auto" style="min-width: 30px; text-align: center">
           <ion-label><strong>{{ flavor.quantity }}</strong></ion-label>
         </ion-col>
-        <ion-col size="auto" *ngIf="flavor.id === 'pistachio'">
-          <ion-icon name="alert-circle" color="danger" size="large"></ion-icon>
+
+        <ion-col size="auto">
+          <ion-icon
+            *ngIf="flavor.stock === 0 || flavor.id === 'pistachio'"
+            name="alert-circle"
+            color="danger"
+            size="large"
+            [routerLink]="['/order', flavor.id]"
+            style="cursor: pointer"
+          >
+          </ion-icon>
         </ion-col>
       </ion-row>
       }

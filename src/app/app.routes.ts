@@ -11,4 +11,9 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./views/ice-cream/ice-cream.page').then((m) => m.IceCreamPage),
   },
+  {
+    path: 'order/:id',
+    loadComponent: () =>
+      import('./views/order/order.page').then((m) => m.OrderPage),
+  },
 ];
