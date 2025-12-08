@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Ice Cream</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <h3>Scoops flavours</h3>
+
+  <ion-grid>
+    @for (flavor of flavors; track flavor.id) {
+    <ion-row class="ion-align-items-center ion-margin-bottom">
+      <ion-col size="auto">
+        <ion-img
+          [src]="flavor.image"
+          style="width: 50px; height: 50px"
+        ></ion-img>
+      </ion-col>
+
+      <ion-col>
+        <ion-label>{{ flavor.name }}</ion-label>
+      </ion-col>
+
+      <ion-col size="auto">
+        <ion-button (click)="onSub(flavor)" color="light" size="small">
+          -
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="auto">
+        <ion-button (click)="onAdd(flavor)" color="light" size="small">
+          +
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="auto" style="min-width: 30px; text-align: center">
+        <ion-label><strong>{{ flavor.quantity }}</strong></ion-label>
+      </ion-col>
+    </ion-row>
+    }
+  </ion-grid>
+</ion-content>

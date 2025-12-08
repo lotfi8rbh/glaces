@@ -14,6 +14,7 @@ export class StockRepositoryServiceService extends StockRepository {
       stock: 300,
       unit: 'ml',
       price: 0,
+      quantity: 0,
     },
     {
       id: 'vanilla',
@@ -22,6 +23,7 @@ export class StockRepositoryServiceService extends StockRepository {
       stock: 100,
       unit: 'ml',
       price: 0,
+      quantity: 0,
     },
     {
       id: 'pistachio',
@@ -30,10 +32,25 @@ export class StockRepositoryServiceService extends StockRepository {
       stock: 0,
       unit: 'ml',
       price: 0,
+      quantity: 0,
     },
 
-    { id: 'cone', name: 'Cone', stock: 2, unit: 'pièce', price: 1.0 },
-    { id: 'cup', name: 'Cup', stock: 7, unit: 'pièce', price: 0.0 },
+    {
+      id: 'cone',
+      name: 'Cone',
+      stock: 2,
+      unit: 'pièce',
+      price: 1.0,
+      quantity: 0,
+    },
+    {
+      id: 'cup',
+      name: 'Cup',
+      stock: 7,
+      unit: 'pièce',
+      price: 0.0,
+      quantity: 0,
+    },
 
     {
       id: 'whipped_cream',
@@ -41,7 +58,15 @@ export class StockRepositoryServiceService extends StockRepository {
       stock: 150,
       unit: 'ml',
       price: 0.95,
+      quantity: 0,
     },
-    { id: 'hazelnuts', name: 'Hazelnuts', stock: 100, unit: 'g', price: 1.3 },
+    {
+      id: 'hazelnuts',
+      name: 'Hazelnuts',
+      stock: 100,
+      unit: 'g',
+      price: 1.3,
+      quantity: 0,
+    },
   ];
 }

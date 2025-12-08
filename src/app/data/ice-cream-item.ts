@@ -5,4 +5,5 @@ export interface IceCreamItem {
   stock: number;
   unit: string;
   price: number;
+  quantity: number;
 }
