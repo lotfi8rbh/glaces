@@ -30,7 +30,7 @@ export class StockRepositoryServiceService extends StockRepository {
       stock: 0,
       unit: 'ml',
       price: 0,
-    }, // Vide selon l'exemple
+    },
 
     { id: 'cone', name: 'Cone', stock: 2, unit: 'pièce', price: 1.0 },
     { id: 'cup', name: 'Cup', stock: 7, unit: 'pièce', price: 0.0 },
