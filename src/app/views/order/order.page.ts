@@ -64,7 +64,6 @@ export class OrderPage implements OnInit {
 
     if (id) {
       this.item = this.allItems.find((i) => i.id === id);
-      // Par défaut, l'item courant est sélectionné (quantity = 1 pour dire "à commander")
       // On utilise 'quantity' ici pour dire "est sélectionné pour la commande" dans cette page
       this.resetSelection();
     }
