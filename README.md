@@ -52,4 +52,5 @@ Pré-requis : Node.js et Ionic CLI installés.
    ```bash
    git clone <URL_DU_REPO>
    cd glaces
+   npm install
    ionic serve
