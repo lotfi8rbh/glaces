@@ -49,7 +49,7 @@ import { IceCreamItem } from '../../data/ice-cream-item';
 export class OrderPage implements OnInit {
   item: IceCreamItem | undefined;
   allItems: IceCreamItem[] = []; // Liste pour l'affichage du stock
-  signature: string = 'Thanks, MB';
+  signature: string = 'Thanks, Mate';
   showDetails: boolean = false; // Pour basculer l'affichage
 
   constructor(
