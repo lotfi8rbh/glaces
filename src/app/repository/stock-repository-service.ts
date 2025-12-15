@@ -69,4 +69,11 @@ export class StockRepositoryServiceService extends StockRepository {
       quantity: 0,
     },
   ];
+  public override decreaseStock(id: string, amount: number): void {
+    const item = this.items.find((i) => i.id === id);
+    if (item) {
+      item.stock -= amount;
+      if (item.stock < 0) item.stock = 0; // Sécurité stock négatif
+    }
+  }
 }

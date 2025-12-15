@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router'; // IMPORTANT : Pour la navigation
+import { RouterLink } from '@angular/router';
+import { ToastController } from '@ionic/angular/standalone';
 import {
   IonContent,
   IonHeader,
@@ -61,7 +62,10 @@ export class IceCreamPage implements OnInit {
   items: IceCreamItem[] = [];
   selectedContainerId: string = 'cup';
 
-  constructor(private stockRepo: StockRepository) {
+  constructor(
+    private stockRepo: StockRepository,
+    private toastCtrl: ToastController
+  ) {
     // Enregistrement de l'icône pour qu'elle s'affiche
     addIcons({ alertCircle });
   }
@@ -88,7 +92,7 @@ export class IceCreamPage implements OnInit {
     );
   }
 
-  // --- Logique Boules ---
+  // --- Logique des Boules ---
   get totalScoops(): number {
     return this.flavors.reduce((acc, item) => acc + item.quantity, 0);
   }
@@ -105,7 +109,7 @@ export class IceCreamPage implements OnInit {
     }
   }
 
-  // --- Logique Contenant ---
+  // --- Logique Container ---
   onContainerChange(event: any) {
     this.selectedContainerId = event.detail.value;
     this.updateContainerStock(this.selectedContainerId);
@@ -141,7 +145,40 @@ export class IceCreamPage implements OnInit {
     return price;
   }
 
-  makeIceCream() {
-    console.log('Creation de la glace...', this.items);
+  async makeIceCream() {
+    // 1. Décrémentation des parfums (50ml par boule)
+    this.flavors.forEach((flavor) => {
+      if (flavor.quantity > 0) {
+        this.stockRepo.decreaseStock(flavor.id, flavor.quantity * 50);
+      }
+    });
+
+    // 2. Décrémentation du contenant (1 pièce)
+    this.stockRepo.decreaseStock(this.selectedContainerId, 1);
+
+    // 3. Décrémentation des extras
+    this.extras.forEach((extra) => {
+      if (extra.quantity > 0) {
+        let amount = 0;
+        if (extra.id === 'whipped_cream') amount = 75; // 75ml
+        if (extra.id === 'hazelnuts') amount = 5; // 5g
+
+        this.stockRepo.decreaseStock(extra.id, amount);
+      }
+    });
+
+    // 4. Feedback utilisateur
+    const toast = await this.toastCtrl.create({
+      message: 'Ice cream created! Stocks updated.',
+      duration: 2000,
+      color: 'success',
+      position: 'bottom',
+    });
+    await toast.present();
+
+    // 5. Réinitialisation de l'interface
+    this.items.forEach((i) => (i.quantity = 0)); // Remise à zéro
+    this.selectedContainerId = 'cup'; // Retour au pot par défaut
+    this.updateContainerStock('cup');
   }
 }
